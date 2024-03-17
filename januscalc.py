@@ -1,31 +1,27 @@
 import ipywidgets as widgets
 from IPython.display import display
 
-# Функция для расчета Janusscore
+# JanusScore formula
 def calculate_janusscore(hx, hy):
     c = 0.005
     return hy * 10 * ((c + hx/hy)**0.3 - c**0.3) / 3
 
-# Виджеты для ввода пользовательских данных
+# widgets
 hx_input = widgets.FloatText(value=1e7, description='VerusHash(CPU):')
 hy_input = widgets.FloatText(value=1e8, description='SHA(GPU):')
 
-# Кнопка для выполнения расчета
-calculate_button = widgets.Button(description="Рассчитать")
+calculate_button = widgets.Button(description="Calculate")
 
-# Место для вывода результата
 output = widgets.Output()
 
-# Обработчик нажатия на кнопку расчета
 def on_calculate_button_clicked(b):
     hx = hx_input.value
     hy = hy_input.value
     result = calculate_janusscore(hx, hy)
     with output:
         output.clear_output()
-        print(f"Результат: {result:.2f}")
+        print(f"Result: {result:.2f}")
 
 calculate_button.on_click(on_calculate_button_clicked)
 
-# Отображение виджетов
 display(widgets.VBox([hx_input, hy_input, calculate_button, output]))
